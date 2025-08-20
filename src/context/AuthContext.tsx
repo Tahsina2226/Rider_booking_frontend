@@ -19,16 +19,22 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+  const [user, setUser] = useState<any>(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  const [token, setToken] = useState<string | null>(() => {
+    return localStorage.getItem("token");
+  });
 
   useEffect(() => {
     if (token) {
       axiosInstance.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${token}`;
+    } else {
+      delete axiosInstance.defaults.headers.common["Authorization"];
     }
   }, [token]);
 
@@ -38,6 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(res.data.user);
       setToken(res.data.token);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       toast.success("Login successful!");
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Login failed");
@@ -57,6 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     delete axiosInstance.defaults.headers.common["Authorization"];
     toast.success("Logged out successfully!");
   };

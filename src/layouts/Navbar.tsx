@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useAuth } from "../context/AuthContext"; // AuthContext import
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth(); // context থেকে ইউজার ও logout
+  const { user, logout } = useAuth();
 
   const menuItems = [
     { path: "/", label: "Home" },
@@ -15,15 +15,22 @@ const Navbar = () => {
     { path: "/faq", label: "FAQ" },
   ];
 
+  if (user) {
+    if (user.role === "rider")
+      menuItems.push({ path: "/dashboard/rider", label: "Rider Dashboard" });
+    if (user.role === "driver")
+      menuItems.push({ path: "/dashboard/driver", label: "Driver Dashboard" });
+    if (user.role === "admin")
+      menuItems.push({ path: "/dashboard/admin", label: "Admin Dashboard" });
+  }
+
   return (
     <nav className="top-0 left-0 z-50 fixed bg-[#ECEEDF] shadow-sm w-full">
       <div className="flex justify-between items-center mx-auto px-6 py-3 container">
-        {/* Logo */}
         <Link to="/" className="font-bold text-gray-800 text-2xl tracking-wide">
           RideFlow
         </Link>
 
-        {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-8">
           {menuItems.map((item) => (
             <li key={item.path} className="group relative">
@@ -43,7 +50,6 @@ const Navbar = () => {
             </li>
           ))}
 
-          {/* Auth section */}
           {user ? (
             <>
               <li className="font-semibold text-gray-800">
@@ -70,7 +76,6 @@ const Navbar = () => {
           )}
         </ul>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-gray-700"
           onClick={() => setIsOpen(!isOpen)}
@@ -79,7 +84,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`md:hidden bg-[#ECEEDF] shadow-sm overflow-hidden transition-all duration-300 z-40 ${
           isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
@@ -104,7 +108,6 @@ const Navbar = () => {
             </li>
           ))}
 
-          {/* Auth Section for Mobile */}
           {user ? (
             <>
               <li className="font-semibold text-gray-800">
