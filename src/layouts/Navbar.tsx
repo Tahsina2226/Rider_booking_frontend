@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { useAuth } from "../context/AuthContext"; // AuthContext import
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth(); // context থেকে ইউজার ও logout
 
   const menuItems = [
     { path: "/", label: "Home" },
@@ -40,14 +42,32 @@ const Navbar = () => {
               <span className="bottom-0 left-0 absolute bg-gray-900 w-0 group-hover:w-full h-1 transition-all"></span>
             </li>
           ))}
-          <li>
-            <Link
-              to="/login"
-              className="bg-gradient-to-r from-[#E0A96D] via-[#D18F5F] to-[#C77B4E] hover:opacity-90 shadow-sm px-5 py-2 rounded-full font-medium text-white transition-opacity"
-            >
-              Login
-            </Link>
-          </li>
+
+          {/* Auth section */}
+          {user ? (
+            <>
+              <li className="font-semibold text-gray-800">
+                Hi, {user.name || user.email}
+              </li>
+              <li>
+                <button
+                  onClick={logout}
+                  className="bg-red-500 hover:bg-red-600 shadow-sm px-5 py-2 rounded-full font-medium text-white transition"
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link
+                to="/login"
+                className="bg-gradient-to-r from-[#E0A96D] via-[#D18F5F] to-[#C77B4E] hover:opacity-90 shadow-sm px-5 py-2 rounded-full font-medium text-white transition-opacity"
+              >
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
 
         {/* Mobile Menu Button */}
@@ -83,15 +103,36 @@ const Navbar = () => {
               </NavLink>
             </li>
           ))}
-          <li>
-            <Link
-              to="/login"
-              onClick={() => setIsOpen(false)}
-              className="block bg-gradient-to-r from-[#E0A96D] via-[#D18F5F] to-[#C77B4E] hover:opacity-90 shadow-sm px-5 py-2 rounded-full font-medium text-white text-center transition-opacity"
-            >
-              Login
-            </Link>
-          </li>
+
+          {/* Auth Section for Mobile */}
+          {user ? (
+            <>
+              <li className="font-semibold text-gray-800">
+                Hi, {user.name || user.email}
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsOpen(false);
+                  }}
+                  className="bg-red-500 hover:bg-red-600 shadow-sm px-5 py-2 rounded-full w-full font-medium text-white transition"
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="block bg-gradient-to-r from-[#E0A96D] via-[#D18F5F] to-[#C77B4E] hover:opacity-90 shadow-sm px-5 py-2 rounded-full font-medium text-white text-center transition-opacity"
+              >
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
