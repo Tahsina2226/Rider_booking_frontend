@@ -15,6 +15,7 @@ import RideDetails from "../pages/Dashboard/RiderDashboard/RideDetails";
 
 import DriverDashboard from "../pages/Dashboard/DriverDashboard/DriverDashboard";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
+import RiderProfile from "../pages/Dashboard/RiderDashboard/RiderProfile";
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: "rider/add-ride", element: <AddRideForm /> },
       { path: "rider/ride-history", element: <RideHistory /> },
       { path: "rider/ride-details/:id", element: <RideDetails /> },
+      { path: "rider/profile", element: <RiderProfile /> },
       { path: "driver", element: <DriverDashboard /> },
       { path: "admin", element: <AdminDashboard /> },
     ],

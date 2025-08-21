@@ -1,66 +1,148 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../api/axios";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
-const API_BASE = "https://rider-booking.onrender.com/api";
+const COLORS = ["#4ade80", "#f87171", "#fbbf24"];
 
 const RiderDashboard = () => {
-  const [totalRides, setTotalRides] = useState(0);
-  const [upcomingRides, setUpcomingRides] = useState(0);
-  const [walletBalance, setWalletBalance] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [rides, setRides] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRides = async () => {
       try {
-        setLoading(true);
-        const res = await axios.get(`${API_BASE}/rides/me`, {
-          withCredentials: true,
-        });
-
-        const rides = res.data || [];
-        setTotalRides(rides.length);
-        const upcoming = rides.filter((ride) => ride.status === "scheduled");
-        setUpcomingRides(upcoming.length);
-        setWalletBalance(res.data?.walletBalance || 1200);
+        const res = await axiosInstance.get("/rides/history");
+        setRides(res.data.rides || []);
       } catch (err) {
-        console.error("Error fetching rides:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-
     fetchRides();
   }, []);
 
+  if (loading) return <p className="p-6">Loading...</p>;
+
+  const rideCountData = rides.reduce((acc, ride) => {
+    const month = new Date(ride.requestedAt).toLocaleString("default", {
+      month: "short",
+    });
+    const existing = acc.find((d) => d.month === month);
+    if (existing) existing.rides += 1;
+    else acc.push({ month, rides: 1 });
+    return acc;
+  }, []);
+
+  const fareData = rides.reduce((acc, ride) => {
+    const month = new Date(ride.requestedAt).toLocaleString("default", {
+      month: "short",
+    });
+    const existing = acc.find((d) => d.month === month);
+    if (existing) existing.fare += ride.fare || 0;
+    else acc.push({ month, fare: ride.fare || 0 });
+    return acc;
+  }, []);
+
+  const statusCount = rides.reduce((acc, ride) => {
+    acc[ride.status] = (acc[ride.status] || 0) + 1;
+    return acc;
+  }, {});
+
+  const statusData = Object.keys(statusCount).map((key) => ({
+    name: key,
+    value: statusCount[key],
+  }));
+
+  const topDestinations = rides.reduce((acc, ride) => {
+    const dest = ride.destinationLocation || "Unknown";
+    const existing = acc.find((d) => d.name === dest);
+    if (existing) existing.count += 1;
+    else acc.push({ name: dest, count: 1 });
+    return acc;
+  }, []);
+
   return (
-    <div>
-      <h1 className="mb-6 font-bold text-gray-800 text-2xl">Rider Dashboard</h1>
-      <div className="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-6">
-        <div className="bg-gradient-to-r from-[#CFAB8D] to-[#D9C4B0] shadow-lg p-6 rounded-2xl text-white">
-          <h2 className="font-semibold text-lg">🚖 Total Rides</h2>
-          <p className="mt-2 font-bold text-3xl">
-            {loading ? "..." : totalRides}
-          </p>
-          <p className="opacity-80 mt-1 text-sm">Completed rides</p>
+    <div className="bg-gray-100 p-6 min-h-screen">
+      <h1 className="mb-6 font-bold text-2xl">Rider Dashboard</h1>
+
+      <div className="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-white shadow p-4 rounded-lg">
+          <h2 className="mb-2 font-semibold text-lg">Total Rides</h2>
+          <p className="mb-2 font-bold text-3xl">{rides.length}</p>
+          <ResponsiveContainer width="100%" height={100}>
+            <LineChart data={rideCountData}>
+              <Line
+                type="monotone"
+                dataKey="rides"
+                stroke="#4ade80"
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
 
-        <div className="bg-gradient-to-r from-[#CFAB8D] to-[#D9C4B0] shadow-lg p-6 rounded-2xl text-white">
-          <h2 className="font-semibold text-lg">📅 Upcoming Rides</h2>
-          <p className="mt-2 font-bold text-3xl">
-            {loading ? "..." : upcomingRides}
+        <div className="bg-white shadow p-4 rounded-lg">
+          <h2 className="mb-2 font-semibold text-lg">Fare Summary</h2>
+          <p className="mb-2 font-bold text-3xl">
+            ৳{fareData.reduce((a, b) => a + b.fare, 0)}
           </p>
-          <p className="opacity-80 mt-1 text-sm">Scheduled</p>
+          <ResponsiveContainer width="100%" height={100}>
+            <BarChart data={fareData}>
+              <Bar dataKey="fare" fill="#3b82f6" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
-        <div className="bg-gradient-to-r from-[#CFAB8D] to-[#D9C4B0] shadow-lg p-6 rounded-2xl text-white">
-          <h2 className="font-semibold text-lg">💳 Wallet Balance</h2>
-          <p className="mt-2 font-bold text-3xl">৳ {walletBalance}</p>
-          <p className="opacity-80 mt-1 text-sm">Available balance</p>
+        <div className="bg-white shadow p-4 rounded-lg">
+          <h2 className="mb-2 font-semibold text-lg">Ride Status</h2>
+          <ResponsiveContainer width="100%" height={150}>
+            <PieChart>
+              <Pie
+                data={statusData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={60}
+                label
+              >
+                {statusData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="col-span-1 md:col-span-2 bg-white shadow p-4 rounded-lg">
+          <h2 className="mb-2 font-semibold text-lg">Top Destinations</h2>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={topDestinations}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="count" fill="#f472b6" />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
       </div>
-
-      <Outlet />
     </div>
   );
 };

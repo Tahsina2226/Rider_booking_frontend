@@ -14,6 +14,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<boolean>;
   register: (data: any) => Promise<void>;
   logout: () => void;
+  updateUser: (user: any) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [token]);
 
-  //  LOGIN
+  // LOGIN
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const res = await axiosInstance.post("/auth/login", { email, password });
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  //  LOGOUT
+  // LOGOUT
   const logout = () => {
     setUser(null);
     setToken(null);
@@ -76,8 +77,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     toast.success("Logged out successfully!");
   };
 
+  // UPDATE USER
+  const updateUser = (updatedUser: any) => {
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, token, login, register, logout, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -78,29 +78,57 @@ const Features = () => {
                   <span className="text-xl">📜</span>
                   <span>Ride History</span>
                 </Link>
+                <Link
+                  to="/features/rider/profile"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">👤</span>
+                  <span>Profile</span>
+                </Link>
               </>
             )}
 
             {user?.role === "driver" && (
-              <Link
-                to="/features/driver"
-                className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span className="text-xl">🚗</span>
-                <span>Driver Dashboard</span>
-              </Link>
+              <>
+                <Link
+                  to="/features/driver"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">🚗</span>
+                  <span>Driver Dashboard</span>
+                </Link>
+                <Link
+                  to="/features/driver/profile"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">👤</span>
+                  <span>Profile</span>
+                </Link>
+              </>
             )}
 
             {user?.role === "admin" && (
-              <Link
-                to="/features/admin"
-                className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span className="text-xl">👨‍💼</span>
-                <span>Admin Dashboard</span>
-              </Link>
+              <>
+                <Link
+                  to="/features/admin"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">👨‍💼</span>
+                  <span>Admin Dashboard</span>
+                </Link>
+                <Link
+                  to="/features/admin/profile"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">👤</span>
+                  <span>Profile</span>
+                </Link>
+              </>
             )}
           </nav>
         </aside>
