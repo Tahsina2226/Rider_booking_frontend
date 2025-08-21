@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 interface AuthContextType {
   user: any;
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<boolean>;
   register: (data: any) => Promise<void>;
   logout: () => void;
 }
@@ -38,19 +38,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [token]);
 
-  const login = async (email: string, password: string) => {
+  //  LOGIN
+  const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const res = await axiosInstance.post("/auth/login", { email, password });
       setUser(res.data.user);
       setToken(res.data.token);
+
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+
       toast.success("Login successful!");
+      return true;
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Login failed");
+      return false;
     }
   };
 
+  // REGISTER
   const register = async (data: any) => {
     try {
       await axiosInstance.post("/auth/register", data);
@@ -60,6 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  //  LOGOUT
   const logout = () => {
     setUser(null);
     setToken(null);
