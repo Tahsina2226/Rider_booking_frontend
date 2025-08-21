@@ -7,12 +7,14 @@ import FAQ from "../pages/FAQ/FAQ";
 import Login from "../pages/login/Login";
 import Register from "../pages/login/Register";
 
+import Features from "../pages/Features/Features";
 import RiderDashboard from "../pages/Dashboard/RiderDashboard/RiderDashboard";
 import AddRideForm from "../pages/Dashboard/RiderDashboard/RiderForm";
+import RideHistory from "../pages/Dashboard/RiderDashboard/RideHistory";
+import RideDetails from "../pages/Dashboard/RiderDashboard/RideDetails";
 
 import DriverDashboard from "../pages/Dashboard/DriverDashboard/DriverDashboard";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
-import Features from "@/pages/Features/Features";
 
 export const router = createBrowserRouter([
   {
@@ -31,8 +33,10 @@ export const router = createBrowserRouter([
     path: "/features",
     element: <Features />,
     children: [
-      { path: "rider", element: <RiderDashboard /> }, // Rider Dashboard
-      { path: "rider/add-ride", element: <AddRideForm /> }, // শুধু ফর্ম
+      { path: "rider", element: <RiderDashboard /> },
+      { path: "rider/add-ride", element: <AddRideForm /> },
+      { path: "rider/ride-history", element: <RideHistory /> },
+      { path: "rider/ride-details/:id", element: <RideDetails /> },
       { path: "driver", element: <DriverDashboard /> },
       { path: "admin", element: <AdminDashboard /> },
     ],

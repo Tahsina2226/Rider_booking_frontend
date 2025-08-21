@@ -3,10 +3,6 @@ import { useAuth } from "../../context/AuthContext";
 import Navbar from "../../layouts/Navbar";
 import Footer from "../../layouts/Footer";
 import { useState } from "react";
-import AddRideForm from "../Dashboard/RiderDashboard/RiderForm";
-import RiderDashboard from "../Dashboard/RiderDashboard/RiderDashboard";
-import DriverDashboard from "../Dashboard/DriverDashboard/DriverDashboard";
-import AdminDashboard from "../Dashboard/AdminDashboard/AdminDashboard";
 
 const Features = () => {
   const { user } = useAuth();
@@ -38,7 +34,6 @@ const Features = () => {
     <div className="flex flex-col bg-gray-50 min-h-screen">
       <Navbar />
 
-      {/* Mobile Menu Button */}
       <div className="md:hidden top-16 right-4 z-50 fixed">
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -49,7 +44,6 @@ const Features = () => {
       </div>
 
       <div className="flex flex-1 mt-16">
-        {/* Sidebar */}
         <aside
           className={`${
             isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -62,7 +56,7 @@ const Features = () => {
               <>
                 <Link
                   to="/features/rider"
-                  className="group flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <span className="text-xl">📊</span>
@@ -70,28 +64,38 @@ const Features = () => {
                 </Link>
                 <Link
                   to="/features/rider/add-ride"
-                  className="group flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <span className="text-xl">➕</span>
                   <span>Add Ride</span>
                 </Link>
+                <Link
+                  to="/features/rider/ride-history"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">📜</span>
+                  <span>Ride History</span>
+                </Link>
               </>
             )}
+
             {user?.role === "driver" && (
               <Link
                 to="/features/driver"
-                className="group flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200"
+                className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="text-xl">🚗</span>
                 <span>Driver Dashboard</span>
               </Link>
             )}
+
             {user?.role === "admin" && (
               <Link
                 to="/features/admin"
-                className="group flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200"
+                className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <span className="text-xl">👨‍💼</span>
@@ -108,10 +112,8 @@ const Features = () => {
           ></div>
         )}
 
-        {/* Main Content */}
         <main className="flex-1 p-4 md:p-6">
           <div className="bg-white shadow-lg p-6 rounded-2xl min-h-[calc(100vh-200px)]">
-            {/* Nested route rendering */}
             <Outlet />
           </div>
         </main>
