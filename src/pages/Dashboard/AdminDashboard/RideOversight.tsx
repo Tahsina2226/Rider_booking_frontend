@@ -1,4 +1,3 @@
-// src/pages/features/admin/RideOversight.tsx
 import React, { useEffect, useState, ChangeEvent } from "react";
 import axiosInstance from "../../../api/axios";
 import toast from "react-hot-toast";
