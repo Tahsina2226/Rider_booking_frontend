@@ -12,7 +12,6 @@ const RiderProfile: React.FC = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Password visibility toggles
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -45,7 +44,7 @@ const RiderProfile: React.FC = () => {
       });
       console.log("Profile Update Response:", data);
 
-      updateUser(data.user); // update context & localStorage
+      updateUser(data.user);
       setProfileMessage("Profile updated successfully!");
     } catch (err: any) {
       console.error("Profile Update Error:", err);

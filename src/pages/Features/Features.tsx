@@ -121,6 +121,14 @@ const Features = () => {
                   <span>Admin Dashboard</span>
                 </Link>
                 <Link
+                  to="/features/admin/UserManagement"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">👤</span>
+                  <span>UserManagement</span>
+                </Link>
+                <Link
                   to="/features/admin/profile"
                   className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
                   onClick={() => setIsMobileMenuOpen(false)}
