@@ -136,6 +136,14 @@ const Features = () => {
                   <span className="text-xl">👤</span>
                   <span>Profile</span>
                 </Link>
+                <Link
+                  to="/features/admin/RideOver"
+                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-xl">👤</span>
+                  <span>RideOver</span>
+                </Link>
               </>
             )}
           </nav>

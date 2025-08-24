@@ -19,6 +19,7 @@ import DriverDashboard from "../pages/Dashboard/DriverDashboard/DriverDashboard"
 import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
 import UserManagement from "../pages/Dashboard/AdminDashboard/UserManagement";
 import Profile from "@/pages/Dashboard/AdminDashboard/Profile";
+import RideOversight from "@/pages/Dashboard/AdminDashboard/RideOversight";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ export const router = createBrowserRouter([
       { path: "admin", element: <AdminDashboard /> },
       { path: "admin/UserManagement", element: <UserManagement /> },
       { path: "admin/Profile", element: <Profile /> },
+      { path: "admin/RideOver", element: <RideOversight /> },
     ],
   },
 ]);
