@@ -6,7 +6,7 @@ import About from "../pages/About/about";
 import Contact from "../pages/Contact/Contact";
 import FAQ from "../pages/FAQ/FAQ";
 import Login from "../pages/login/Login";
-import Register from "../pages/login/Login";
+import Register from "../pages/login/Register";
 
 import Features from "../pages/Features/Features";
 import RiderDashboard from "../pages/Dashboard/RiderDashboard/RiderDashboard";
@@ -20,6 +20,11 @@ import AdminDashboard from "../pages/Dashboard/AdminDashboard/AdminDashboard";
 import UserManagement from "../pages/Dashboard/AdminDashboard/UserManagement";
 import Profile from "@/pages/Dashboard/AdminDashboard/Profile";
 import RideOversight from "@/pages/Dashboard/AdminDashboard/RideOversight";
+
+import EarningsHistory from "@/pages/Dashboard/DriverDashboard/EarningsHistory";
+import ProfileManagement from "@/pages/Dashboard/DriverDashboard/ProfileManagement";
+import AvailabilityRequests from "@/pages/Dashboard/DriverDashboard/AvailabilityRequests";
+import ActiveRide from "@/pages/Dashboard/DriverDashboard/ActiveRide";
 
 export const router = createBrowserRouter([
   {
@@ -47,7 +52,10 @@ export const router = createBrowserRouter([
 
       // Driver
       { path: "driver", element: <DriverDashboard /> },
-
+      { path: "driver/earnings", element: <EarningsHistory /> },
+      { path: "driver/availability", element: <AvailabilityRequests /> },
+      { path: "driver/profile", element: <ProfileManagement /> },
+      { path: "driver/active-ride", element: <ActiveRide /> },
       // Admin
       { path: "admin", element: <AdminDashboard /> },
       { path: "admin/UserManagement", element: <UserManagement /> },
