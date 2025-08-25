@@ -45,9 +45,9 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 min-h-screen">
+    <div className="flex justify-center items-center bg-gradient-to-br from-[#F9E8E8] to-[#F2DADA] p-4 min-h-screen">
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-md overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white text-center">
+        <div className="bg-gradient-to-r from-[#E5BEB5] to-[#DCAFA9] p-6 text-white text-center">
           <h1 className="font-bold text-3xl">Create Account</h1>
           <p className="opacity-90 mt-2">
             Join us and get started with your rides
@@ -62,7 +62,6 @@ const Register = () => {
             </div>
           )}
 
-          {/* Name */}
           <div className="mb-6">
             <label className="block mb-2 font-medium text-gray-700 text-sm">
               Full Name
@@ -80,7 +79,7 @@ const Register = () => {
                     message: "Name must be at least 2 characters",
                   },
                 })}
-                className="block py-3 pr-4 pl-10 border border-gray-300 focus:border-blue-500 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="block py-3 pr-4 pl-10 border border-gray-300 focus:border-[#E5BEB5] rounded-lg focus:ring-[#E5BEB5] focus:ring-2 w-full"
               />
             </div>
             {errors.name && (
@@ -88,7 +87,6 @@ const Register = () => {
             )}
           </div>
 
-          {/* Email */}
           <div className="mb-6">
             <label className="block mb-2 font-medium text-gray-700 text-sm">
               Email Address
@@ -107,7 +105,7 @@ const Register = () => {
                     message: "Please enter a valid email address",
                   },
                 })}
-                className="block py-3 pr-4 pl-10 border border-gray-300 focus:border-blue-500 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="block py-3 pr-4 pl-10 border border-gray-300 focus:border-[#E5BEB5] rounded-lg focus:ring-[#E5BEB5] focus:ring-2 w-full"
               />
             </div>
             {errors.email && (
@@ -117,14 +115,13 @@ const Register = () => {
             )}
           </div>
 
-          {/* Role */}
           <div className="mb-6">
             <label className="block mb-2 font-medium text-gray-700 text-sm">
               I want to be a
             </label>
             <select
               {...register("role", { required: "Please select a role" })}
-              className="block px-4 py-3 border border-gray-300 focus:border-blue-500 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+              className="block px-4 py-3 border border-gray-300 focus:border-[#E5BEB5] rounded-lg focus:ring-[#E5BEB5] focus:ring-2 w-full"
             >
               <option value="">Select role</option>
               <option value="rider">Rider</option>
@@ -136,7 +133,6 @@ const Register = () => {
             )}
           </div>
 
-          {/* Password */}
           <div className="mb-6">
             <label className="block mb-2 font-medium text-gray-700 text-sm">
               Password
@@ -155,7 +151,7 @@ const Register = () => {
                     message: "Password must be at least 6 characters",
                   },
                 })}
-                className="block py-3 pr-12 pl-10 border border-gray-300 focus:border-blue-500 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="block py-3 pr-12 pl-10 border border-gray-300 focus:border-[#E5BEB5] rounded-lg focus:ring-[#E5BEB5] focus:ring-2 w-full"
               />
               <button
                 type="button"
@@ -176,7 +172,6 @@ const Register = () => {
             )}
           </div>
 
-          {/* Confirm Password */}
           <div className="mb-6">
             <label className="block mb-2 font-medium text-gray-700 text-sm">
               Confirm Password
@@ -193,7 +188,7 @@ const Register = () => {
                   validate: (value) =>
                     value === password || "Passwords do not match",
                 })}
-                className="block py-3 pr-12 pl-10 border border-gray-300 focus:border-blue-500 rounded-lg focus:ring-2 focus:ring-blue-500 w-full"
+                className="block py-3 pr-12 pl-10 border border-gray-300 focus:border-[#E5BEB5] rounded-lg focus:ring-[#E5BEB5] focus:ring-2 w-full"
               />
               <button
                 type="button"
@@ -214,11 +209,10 @@ const Register = () => {
             )}
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-3 rounded-lg w-full font-medium text-white transition-colors disabled:cursor-not-allowed"
+            className="bg-[#E5BEB5] hover:bg-[#DCAFA9] disabled:opacity-50 px-4 py-3 rounded-lg w-full font-medium text-white transition-colors disabled:cursor-not-allowed"
           >
             {isLoading ? "Creating account..." : "Create Account"}
           </button>
@@ -228,7 +222,7 @@ const Register = () => {
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="font-medium text-blue-600 hover:text-blue-800"
+                className="font-medium text-[#E5BEB5] hover:text-[#DCAFA9]"
               >
                 Sign in
               </Link>

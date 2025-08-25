@@ -12,19 +12,42 @@ const Features = () => {
 
   const roleConfig = {
     rider: {
-      title: "Rider Dashboard",
-      icon: "🚴",
       color: "from-[#CFAB8D] to-[#D9C4B0]",
+      links: [
+        { to: "/features/rider", label: "Dashboard", icon: "📊" },
+        { to: "/features/rider/add-ride", label: "Add Ride", icon: "➕" },
+        {
+          to: "/features/rider/ride-history",
+          label: "Ride History",
+          icon: "📜",
+        },
+        { to: "/features/rider/profile", label: "Profile", icon: "👤" },
+      ],
     },
     driver: {
-      title: "Driver Dashboard",
-      icon: "🚗",
       color: "from-[#CFAB8D] to-[#D9C4B0]",
+      links: [
+        { to: "/features/driver", label: "Dashboard", icon: "🚗" },
+        { to: "/features/driver/earnings", label: "Earnings", icon: "💰" },
+        {
+          to: "/features/driver/availability",
+          label: "Availability Requests",
+          icon: "📩",
+        },
+        {
+          to: "/features/driver/active-ride",
+          label: "Active Ride",
+          icon: "🚦",
+        },
+        { to: "/features/driver/profile", label: "Profile", icon: "👤" },
+      ],
     },
     admin: {
-      title: "Admin Dashboard",
-      icon: "👨‍💼",
       color: "from-[#CFAB8D] to-[#D9C4B0]",
+      links: [
+        { to: "/features/admin", label: "Dashboard", icon: "👨‍💼" },
+        { to: "/features/admin/profile", label: "Profile", icon: "👤" },
+      ],
     },
   };
 
@@ -54,54 +77,17 @@ const Features = () => {
           } p-6 w-64 text-white shadow-xl`}
         >
           <nav className="flex flex-col gap-2">
-            {user?.role === "driver" && (
-              <>
-                <Link
-                  to="/features/driver"
-                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className="text-xl">🚗</span>
-                  <span>Dashboard</span>
-                </Link>
-
-                <Link
-                  to="/features/driver/earnings"
-                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className="text-xl">💰</span>
-                  <span>Earnings</span>
-                </Link>
-
-                <Link
-                  to="/features/driver/availability"
-                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className="text-xl">📩</span>
-                  <span>Availability Requests</span>
-                </Link>
-
-                <Link
-                  to="/features/driver/active-ride"
-                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className="text-xl">🚦</span>
-                  <span>Active Ride</span>
-                </Link>
-
-                <Link
-                  to="/features/driver/profile"
-                  className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className="text-xl">👤</span>
-                  <span>Profile</span>
-                </Link>
-              </>
-            )}
+            {currentRoleConfig.links.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="group flex items-center space-x-3 hover:bg-white px-4 py-3 rounded-xl hover:text-gray-800 transition-all duration-200"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <span className="text-xl">{link.icon}</span>
+                <span>{link.label}</span>
+              </Link>
+            ))}
           </nav>
         </aside>
 

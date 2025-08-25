@@ -10,19 +10,10 @@ const Navbar = () => {
   const menuItems = [
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
-    { path: "/features", label: "Features" },
+    { path: "/features", label: "Features" }, // only one Features
     { path: "/contact", label: "Contact" },
     { path: "/faq", label: "FAQ" },
   ];
-
-  if (user) {
-    if (user.role === "rider")
-      menuItems.push({ path: "/dashboard/rider", label: "Rider Dashboard" });
-    if (user.role === "driver")
-      menuItems.push({ path: "/dashboard/driver", label: "Driver Dashboard" });
-    if (user.role === "admin")
-      menuItems.push({ path: "/dashboard/admin", label: "Admin Dashboard" });
-  }
 
   return (
     <nav className="top-0 left-0 z-50 fixed bg-[#ECEEDF] shadow-sm w-full">
